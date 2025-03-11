@@ -1,5 +1,6 @@
 from functools import partial
 import json
+from django import db
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
@@ -66,8 +67,15 @@ class OrderAPIView(APIView):
                 print("False")
                 print(order_serializer.errors)
                 return HttpResponse("Mine")
+    
+    def delete(self,request):
 
-
+        input_id = request.GET.get('id')
+        if input_id :
+            db_object = get_object_or_404(Order,id=input_id)
+            print(db_object)
+            db_object.delete()
+            return HttpResponse("hi how are u")
 
     
 
